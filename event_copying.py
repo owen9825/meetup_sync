@@ -123,6 +123,19 @@ def hide_events(event_list: Optional[BeautifulSoup], hide_finished_events: bool,
     logger.info("%s / %s events are to be displayed", displayed, len(event_lis))
 
 
+IMAGE_IDENTIFIER = "🖼"  # A reliable signal to our shell script
+
+
+def log_imagery_for_copying(image_soup: BeautifulSoup):
+    """
+    Log all the images in this soup, so that they may be copied to the new destination. We'll leave it to a shell script
+    to carry this out.
+    """
+    for image in image_soup.find_all("img", recursive=True):
+        # Do not put a space in-between these two strings, otherwise it's more hassle to extract it.
+        logger.info("%s%s", IMAGE_IDENTIFIER, image["src"])
+
+
 def replace_events_in_file(source_filename: str, destination_filename, hide_finished_events: bool,
                            visible_population: int):
     # Read some events on one page, and inject a modified version into a destination file.
@@ -146,6 +159,7 @@ def replace_events_in_file(source_filename: str, destination_filename, hide_fini
     with io.open(destination_filename, "w") as destination_file:
         destination_file.write(destination_soup.prettify("utf-8").decode())
     logger.info("Events have been written to %s", destination_filename)
+    log_imagery_for_copying(events)
 
 
 if __name__ == "__main__":
