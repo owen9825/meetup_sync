@@ -4,3 +4,7 @@ a new page.
 
 By saving the events with Unix time, we can embed some JavaScript on a page to easily convert the times when the page
 is served.
+
+
+## Future work
+* Copying across the imagery from the source website to the destination.
