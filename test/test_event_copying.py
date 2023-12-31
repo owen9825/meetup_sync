@@ -2,12 +2,12 @@ import unittest
 from datetime import datetime, timezone, timedelta
 
 from logging_helpers import get_colored_logger
-from time_replacement import get_tzinfo, get_datetime_from_string
+from event_copying import get_tzinfo, get_datetime_from_string
 
 logger = get_colored_logger()
 
 
-class MeetupSyncTest(unittest.TestCase):
+class EventCopyingTest(unittest.TestCase):
     def test_get_tzinfo(self):
         self.assertEqual(get_tzinfo("+11").utcoffset(datetime.now()).total_seconds(), 11*60*60)
         self.assertEqual(get_tzinfo("+1100").utcoffset(datetime.now()).total_seconds(), 11 * 60 * 60)
