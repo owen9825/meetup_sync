@@ -5,12 +5,16 @@ import re
 
 from bs4 import BeautifulSoup
 
+from logging_helpers import get_colored_logger
+
 # Sample HTML content
 html_content = '''
 <div>
     <time class="text-[#00829B] text-sm font-medium uppercase">Sat, Nov 11, 2023, 4:00 PM UTC+11</time>
 </div>
 '''
+
+logger = get_colored_logger()
 
 
 def get_tzinfo(offset_str) -> datetime.timezone:
@@ -59,7 +63,7 @@ def replace_time_strings(source_filename: str):
         for time_element in soup.find_all('time'):
             # Replace with Unix timestamp
             time_element.text = int(get_datetime_from_element(time_element).timestamp() * 1_000)
-            print(f"A time element has been replaced with {time_element.text}")
+            logger(f"A time element has been replaced with {time_element.text}")
         print(source_file.write(soup.prettify()))
 
 
