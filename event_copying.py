@@ -87,6 +87,8 @@ def parse_events_from_file(source_filename) -> Optional[BeautifulSoup]:
     with io.open(source_filename) as source_file:
         html_content = source_file.read()
     source_soup = BeautifulSoup(html_content, "html.parser")
+    if source_soup:
+        logger.info("The soup has been extracted from %s", source_filename)
     return get_event_list_with_unix_times(source_soup)
 
 
